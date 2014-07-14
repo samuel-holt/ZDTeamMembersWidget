@@ -7,7 +7,7 @@
  */
 
 class ZD_Utilities {
-    private static $prefix = ZDTW_TEXT_DOMAIN;
+    private static $prefix = ZDTMW_TEXT_DOMAIN;
 
     public static function zdtw_get_option( $option_name ) {
         return get_option('_' . self::$prefix . '_' . $option_name );

@@ -149,9 +149,10 @@ class Team_Member_Widget extends WP_Widget {
         $wid = $this->widget_id;
 
         extract( $instance );
+        extract( $args );
 
 //        $full_name = $first_name . ' ' . $last_name;
-        $image_thumbnail_data = wp_get_attachment_image_src( $avatar, 'thumbnail' );
+        $image_thumbnail_data = wp_get_attachment_image_src( $avatar, ZD_Utilities::zdtw_get_option('team_member_image_size_in_widget'));
         $image_thumbnail_src = $image_thumbnail_data[0];
         $image_thumbnail_width = $image_thumbnail_data[1];
         $image_thumbnail_height = $image_thumbnail_data[2];
@@ -163,10 +164,14 @@ class Team_Member_Widget extends WP_Widget {
 
         $modal_id = $this->slugify( $full_name );
 
+
         $html = '';
 
-//        $show_multiple = get_option( '_' . $wid . '_show_multiple_team_members_in_side_bar') ? ' show-multiple' : '';
+        $before = $before_widget;
+        $after = $after_widget;
 
+//        $show_multiple = get_option( '_' . $wid . '_show_multiple_team_members_in_side_bar') ? ' show-multiple' : '';
+        $html .= $before;
         $html .= "<div class=\"{$wid}-team_member\">\n";
         //        $html .= "<h1>team_member</h1>\n";
 
@@ -183,15 +188,15 @@ class Team_Member_Widget extends WP_Widget {
 
 //        $html .= $show_hr;
 
-        $html .= "<div class=\"team-member-meta\">\n";
+        $html .= "<div class=\"team-member-meta\" data-equalizer>\n";
 
-        $html .= "<p>";
+        $html .= "<p data-equalizer-watch>";
 
         if( $full_name ) {
             $html .= $full_name;
         }
         if( $job_title ) {
-            $html .= " | {$job_title}";
+            $html .= " <br /> {$job_title}";
         }
         if( $business_name ) {
             $html .= ", {$business_name}";
@@ -227,7 +232,7 @@ class Team_Member_Widget extends WP_Widget {
 
         $html .= "<a class=\"close-reveal-modal\">&#215;</a>\n";
         $html .= "</div><!--/reveal-modal-->\n";
-
+        $html .= $after;
         echo $html;
 
     }

@@ -55,6 +55,9 @@ class ZDTeamMembersSettings {
             'show_team_member_in_modal' => array(
                 'type' => 'checkbox'
             ),
+            'team_member_image_size_in_widget' => array(
+                'type' => 'text'
+            ),
 //            'show_multiple_team_members_in_side_bar' => array(
 //                'type' => 'checkbox'
 //            ),
