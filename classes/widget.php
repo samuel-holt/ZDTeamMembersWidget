@@ -174,12 +174,21 @@ class Team_Member_Widget extends WP_Widget {
         $html .= $before;
         $html .= "<div class=\"{$wid}-team_member\">\n";
         //        $html .= "<h1>team_member</h1>\n";
+        $show_in_modal = ZD_Utilities::zdtw_get_option('show_in_modal');
 
         if( $image_thumbnail_data ) {
             $html .= "<div class=\"{$wid}-avatar-image\">\n";
-            $html .= "<a href=\"#\" data-reveal-id=\"{$modal_id}\">\n";
+//            $html .= "";
+
+            if( $show_in_modal ) {
+                $html .= "<a href=\"#\" data-reveal-id=\"{$modal_id}\">\n";
+            }
+
             $html .= "<img src=\"{$image_thumbnail_src}\" alt=\"{$full_name}'s avatar.\" width=\"{$image_thumbnail_width}\" height=\"{$image_thumbnail_height}\" />\n";
-            $html .= "</a>\n";
+
+            if( $show_in_modal ) {
+                $html .= "</a>\n";
+            }
             $html .= "</div><!--avatar-image-->\n";
         }
 
@@ -188,9 +197,9 @@ class Team_Member_Widget extends WP_Widget {
 
 //        $html .= $show_hr;
 
-        $html .= "<div class=\"team-member-meta\" data-equalizer>\n";
+        $html .= "<div class=\"team-member-meta\">\n";
 
-        $html .= "<p data-equalizer-watch>";
+        $html .= "<p>";
 
         if( $full_name ) {
             $html .= $full_name;
@@ -212,26 +221,30 @@ class Team_Member_Widget extends WP_Widget {
 
         // Modal window:
 
-        $html .= "<div id=\"{$modal_id}\" class=\"reveal-modal\" data-reveal>\n";
+        if( $show_in_modal ) {
+            $html .= "<div id=\"{$modal_id}\" class=\"reveal-modal\" data-reveal>\n";
 
-        $html .= "<article>\n";
+            $html .= "<article>\n";
 
-        if( $image_full_data ) {
-            $html .= "<div class=\"{$wid}-avatar-image\">\n";
-            $html .= "<img src=\"{$image_full_src}\" alt=\"{$full_name}'s avatar.\" width=\"{$image_full_width}\" height=\"{$image_full_height}\" />\n";
-            $html .= "</div><!--avatar-image-->\n";
+            if( $image_full_data ) {
+                $html .= "<div class=\"{$wid}-avatar-image\">\n";
+                $html .= "<img src=\"{$image_full_src}\" alt=\"{$full_name}'s avatar.\" width=\"{$image_full_width}\" height=\"{$image_full_height}\" />\n";
+                $html .= "</div><!--avatar-image-->\n";
+            }
+
+            $html .= "<h2>{$full_name}</h2>\n";
+
+            $html .= "<div class=\"team-member-description {$custom_team_member_class}\">\n";
+            $html .= wpautop( $description );
+            $html .= "</div><!--/team_member-description-->\n";
+
+            $html .= "</article>\n";
+
+            $html .= "<a class=\"close-reveal-modal\">&#215;</a>\n";
+            $html .= "</div><!--/reveal-modal-->\n";
         }
 
-        $html .= "<h2>{$full_name}</h2>\n";
 
-        $html .= "<div class=\"team-member-description {$custom_team_member_class}\">\n";
-        $html .= wpautop( $description );
-        $html .= "</div><!--/team_member-description-->\n";
-
-        $html .= "</article>\n";
-
-        $html .= "<a class=\"close-reveal-modal\">&#215;</a>\n";
-        $html .= "</div><!--/reveal-modal-->\n";
         $html .= $after;
         echo $html;
 
